@@ -1,0 +1,54 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.2'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
+
+check.dependsOn 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    configFile file("checkstyle.xml")
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    classpath = files()
+}
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles 'proguard.cfg'
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+    }
+}
+
+dependencies {
+    compile project(':OneDriveSDK')
+}

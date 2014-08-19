@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PickerSample</string>
+    <string name="main_welcomeText">OneDriveSDK Picker Sample</string>
+    <string name="main_radioWebViewLink">Web View Link</string>
+    <string name="main_radioDownloadLink">Download Link</string>
+    <string name="main_startPickerButton">Pick a File</string>
+    <string name="main_resultTableProperty">Property</string>
+    <string name="main_resultTableValue">Value</string>
+    <string name="main_resultTableName">Name:</string>
+    <string name="main_resultTableLinkType">LinkType:</string>
+    <string name="main_resultTableLink">Link:</string>
+    <string name="main_resultTableFileSize">File Size:</string>
+    <string name="main_resultTableThumbnails">Thumbnails:</string>
+    <string name="main_thumbnailTitle1">Thumbnail: Small</string>
+    <string name="main_thumbnailTitle2">Thumbnail: Medium</string>
+    <string name="main_thumbnailTitle3">Thumbnail: Large</string>
+    <string name="main_thumbnailDefaultUrl">https://www.onedrive.com</string>
+    <string name="main_thumbnailDescription">A thumbnail</string>
+
+    <color name="main_thumbnailBackgroundColor">#0043ae</color>
+
+    <dimen name="main_majorSpacer">16dp</dimen>
+    <dimen name="main_minorSpacer">8dp</dimen>
+    <dimen name="main_marginSides">16dp</dimen>
+
+</resources>
