@@ -68,23 +68,45 @@
                 android:layout_centerVertical="true"
                 android:text="@string/main_startPickerButton" />
         </RelativeLayout>
-    
-        <Space
-            android:id="@+id/pickerOptionsResultSpacer"
+
+        <RelativeLayout
+            android:id="@+id/saveAsArea"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/pickerOptionsLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/main_majorSpacer" />
+            android:paddingRight="@dimen/main_marginSides"
+            android:paddingLeft="@dimen/main_marginSides">
+
+            <Button
+                android:id="@+id/saveAsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/saveAsText"
+                android:text="@string/main_resultSaveAsButtonLabel"/>
+
+            <TextView
+                android:id="@+id/saveAsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:text="@string/main_resultSaveAsLabel"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        </RelativeLayout>
     
         <TableLayout
             android:id="@+id/table1"
-            android:layout_below="@+id/pickerOptionsResultSpacer"
+            android:layout_below="@+id/saveAsArea"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/main_marginSides"
             android:layout_marginRight="@dimen/main_marginSides" >
-    
+
             <TableRow
                 android:id="@+id/tableRowHeader"
                 android:layout_width="wrap_content"
@@ -110,15 +132,23 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-                <TextView android:text="@string/main_resultTableLink"/>
-                <TextView android:id="@+id/linkResult" android:textIsSelectable="true" />
+
+                <TextView android:text="@string/main_resultTableLink" />
+
+                <TextView
+                    android:id="@+id/linkResult"
+                    android:textIsSelectable="true" />
             </TableRow>
-    
+
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-                <TextView android:text="@string/main_resultTableFileSize"/>
-                <TextView android:id="@+id/fileSizeResult" android:textIsSelectable="true" />
+
+                <TextView android:text="@string/main_resultTableFileSize" />
+
+                <TextView
+                    android:id="@+id/fileSizeResult"
+                    android:textIsSelectable="true" />
             </TableRow>
 
             <TableRow
