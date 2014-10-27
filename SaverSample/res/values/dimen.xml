@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_majorSpacer">16dp</dimen>
+    <dimen name="main_minorSpacer">8dp</dimen>
+</resources>

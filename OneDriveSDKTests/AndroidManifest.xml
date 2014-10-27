@@ -12,7 +12,9 @@
         android:targetPackage="com.microsoft.onedrivesdk.tests"
         android:name="android.test.InstrumentationTestRunner" />
     
-    <application android:allowBackup="false">
+    <application
+        android:allowBackup="false"
+        android:icon="@android:drawable/sym_def_app_icon">
         <uses-library android:name="android.test.runner"/>
     </application>
     

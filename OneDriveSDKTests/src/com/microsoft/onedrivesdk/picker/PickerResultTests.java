@@ -76,17 +76,15 @@ public class PickerResultTests extends AndroidTestCase {
     public void testNameWithNullExtension() {
         // Setup
         final String name = "this is a great file name";
-        final String extension = null;
-        final String expected = name;
         mBundle.putString("name", name);
-        mBundle.putString("extension", extension);
+        mBundle.putString("extension", null);
         final IPickerResult result = PickerResult.fromBundle(mBundle);
 
         // Act
         final String actual = result.getName();
 
         // Verify
-        assertEquals(expected, actual);
+        assertEquals(name, actual);
     }
 
     /**

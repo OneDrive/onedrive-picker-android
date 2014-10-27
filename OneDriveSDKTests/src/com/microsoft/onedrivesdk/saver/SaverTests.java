@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 // ------------------------------------------------------------------------------
 
-package com.microsoft.onedrivesdk.picker;
+package com.microsoft.onedrivesdk.saver;
 
 import com.microsoft.onedrivesdk.common.*;
 import com.microsoft.onedrivesdk.common.TestActivity.*;
@@ -37,21 +37,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 import junit.framework.Assert;
 
 /**
- * All test cases for the {@link Picker}
+ * All test cases for the {@link Saver}
  * 
  * @author pnied
  */
-public class PickerTests extends ActivityUnitTestCase<TestActivity> {
+public class SaverTests extends ActivityUnitTestCase<TestActivity> {
 
     /**
-     * The identifier for the APP ID extra within the Picker intent
+     * The identifier for the APP ID extra within the Saver intent
      */
     private static final String APP_ID_EXTRA = "appId";
 
     /**
-     * The intent action OneDrive Client response to for picking files
+     * The intent action OneDrive Client response to for saving files
      */
-    private static final String ONEDRIVE_INTENT_ACTION_PICKER = "onedrive.intent.action.PICKER";
+    private static final String ONEDRIVE_INTENT_ACTION_SAVER = "onedrive.intent.action.SAVER";
 
     /**
      * The intent that is used to launch the android market place to download the
@@ -68,25 +68,25 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
     /**
      * Default Constructor
      */
-    public PickerTests() {
+    public SaverTests() {
         super(TestActivity.class);
     }
 
     /**
-     * Makes sure that the OneDrive Client is called when we us start picking
-     * with the 'app' available.
+     * Makes sure that the OneDrive Client is called when we us start saving
+     * with the 'app' available and override disabled.
      */
-    public void testStartPickingStartOneDriveClient() {
+    public void testStartSavingStartOneDriveClient() {
         // Setup
-        final String expectedAppId = "12321";
-        final int expectedRequestCode = 987789;
+        final int expectedRequestCode = 0xF1F1;
+        final String expectedAppId = "123321";
+        final String expectedFileName = "myFile.txt";
+        final Uri expectedUri = Uri.parse("content://foo/bar");
         final TestActivity testActivity = new TestActivity();
-        final AtomicInteger queryIntentActivitiesCount = new AtomicInteger();
 
         testActivity.mQueryIntentActivitiesAction = new QueryIntentActivitiesAction() {
             @Override
             public List<ResolveInfo> action(final Intent intent, final int flags) {
-                queryIntentActivitiesCount.incrementAndGet();
                 verifyOneDriveGetContentActivity(intent);
                 assertEquals(0, flags);
                 return Arrays.asList(new ResolveInfo());
@@ -99,25 +99,25 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
                 verifyOneDriveGetContentActivity(intent);
                 assertEquals(expectedRequestCode, requestCode);
                 assertEquals(expectedAppId, intent.getStringExtra(APP_ID_EXTRA));
+                assertEquals(expectedFileName, intent.getStringExtra("filename"));
+                assertEquals(expectedUri, intent.getParcelableExtra("data"));
             }
         };
 
         // Action
-        final IPicker picker = Picker.createPicker(expectedAppId);
-        picker.setRequestCode(expectedRequestCode);
-        picker.startPicking(testActivity, LinkType.DownloadLink);
+        final ISaver saver = Saver.createSaver(expectedAppId);
+        saver.startSaving(testActivity, expectedFileName, expectedUri);
 
         // Verify
         Assert.assertEquals(0, testActivity.mStartActivityCallCount.get());
         Assert.assertEquals(1, testActivity.mStartActivityForResultCallCount.get());
-        Assert.assertEquals(1, queryIntentActivitiesCount.get());
     }
 
     /**
      * Makes sure that if the OneDrive client is not available we start the
      * android market place link to download it
      */
-    public void testStartPickingStartAndroidMarketPlace() {
+    public void testStartSaverStartAndroidMarketPlace() {
         // Setup
         final String expectedAppId = "12321";
         final TestActivity testActivity = new TestActivity();
@@ -127,7 +127,7 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
             @Override
             public List<ResolveInfo> action(final Intent intent, final int flags) {
                 queryIntentActivitiesCount.incrementAndGet();
-                if (intent.getAction().equals(ONEDRIVE_INTENT_ACTION_PICKER)) {
+                if (intent.getAction().equals(ONEDRIVE_INTENT_ACTION_SAVER)) {
                     verifyOneDriveGetContentActivity(intent);
                     assertEquals(0, flags);
                     return new ArrayList<ResolveInfo>();
@@ -147,8 +147,8 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
         };
 
         // Action
-        final IPicker picker = Picker.createPicker(expectedAppId);
-        picker.startPicking(testActivity, LinkType.DownloadLink);
+        final ISaver saver = Saver.createSaver(expectedAppId);
+        saver.startSaving(testActivity, null, null);
 
         // Verify
         Assert.assertEquals(1, testActivity.mStartActivityCallCount.get());
@@ -160,7 +160,7 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
      * Makes sure that if the OneDrive client is not available we start the
      * amazon market place link to download it
      */
-    public void testStartPickingStartAmazonMarketPlace() {
+    public void testStartSavingStartAmazonMarketPlace() {
         // Setup
         final String expectedAppId = "12321";
         final TestActivity testActivity = new TestActivity();
@@ -170,7 +170,7 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
             @Override
             public List<ResolveInfo> action(final Intent intent, final int flags) {
                 queryIntentActivitiesCount.incrementAndGet();
-                if (intent.getAction().equals(ONEDRIVE_INTENT_ACTION_PICKER)) {
+                if (intent.getAction().equals(ONEDRIVE_INTENT_ACTION_SAVER)) {
                     verifyOneDriveGetContentActivity(intent);
                     assertEquals(0, flags);
                     return new ArrayList<ResolveInfo>();
@@ -196,8 +196,8 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
         };
 
         // Action
-        final IPicker picker = Picker.createPicker(expectedAppId);
-        picker.startPicking(testActivity, LinkType.DownloadLink);
+        final ISaver saver = Saver.createSaver(expectedAppId);
+        saver.startSaving(testActivity, null, null);
 
         // Verify
         Assert.assertEquals(1, testActivity.mStartActivityCallCount.get());
@@ -209,7 +209,7 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
      * Makes sure that if the OneDrive client and the market place isn't
      * installed we show an error message
      */
-    public void testStartPickingOnEmulator() {
+    public void testStartSavingOnEmulator() {
         // Setup
         final String expectedAppId = "12321";
         final TestActivity testActivity = new TestActivity();
@@ -219,7 +219,7 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
             @Override
             public List<ResolveInfo> action(final Intent intent, final int flags) {
                 queryIntentActivitiesCount.incrementAndGet();
-                if (intent.getAction().equals(ONEDRIVE_INTENT_ACTION_PICKER)) {
+                if (intent.getAction().equals(ONEDRIVE_INTENT_ACTION_SAVER)) {
                     verifyOneDriveGetContentActivity(intent);
                     assertEquals(0, flags);
                     return new ArrayList<ResolveInfo>();
@@ -245,9 +245,9 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
         };
 
         // Action
-        final IPicker picker = Picker.createPicker(expectedAppId);
+        final ISaver saver = Saver.createSaver(expectedAppId);
         try {
-            picker.startPicking(testActivity, LinkType.DownloadLink);
+            saver.startSaving(testActivity, null, null);
             fail("Expected error from MockObject");
         } catch (final UnsupportedOperationException e) {
             // Expected
@@ -261,91 +261,65 @@ public class PickerTests extends ActivityUnitTestCase<TestActivity> {
     }
 
     /**
-     * Makes sure that if we have a valid response we can get a picker result
+     * Makes sure that if we have a valid response we can get a Saver result
      */
-    public void testGetValidPickerResult() {
+    public void testGetValidSaverResult() throws SaverException {
         // Setup
-        final String appId = "12321";
+        final String appId = "1234321";
         final int requestCode = 456;
-        final IPicker picker = Picker.createPicker(appId);
-        picker.setRequestCode(requestCode);
+        final ISaver saver = Saver.createSaver(appId);
+        saver.setRequestCode(requestCode);
 
         // Act
-        final Intent data = new Intent();
-        data.putExtra("linkType", LinkType.DownloadLink.toString());
-        data.putExtra("link", Uri.parse("http://foo/bar.txt"));
-        final IPickerResult result = picker.getPickerResult(requestCode, Activity.RESULT_OK, data);
+        final boolean result = saver.handleSave(requestCode, Activity.RESULT_OK, new Intent());
 
         // Verify
-        assertNotNull(result);
+        assertTrue(result);
     }
 
     /**
-     * Makes sure that if we have a request code mismatch we do not get a picker
+     * Makes sure that if we have a request code mismatch we do not get a Saver
      * result
      */
-    public void testGetPickerResultRequestCodeMismatch() {
+    public void testGetSaverResultRequestCodeMismatch() throws SaverException {
         // Setup
-        final String appId = "12321";
+        final String appId = "1234321";
         final int requestCode = 456;
-        final IPicker picker = Picker.createPicker(appId);
+        final ISaver saver = Saver.createSaver(appId);
 
         // Act
-        final IPickerResult result = picker.getPickerResult(requestCode, Activity.RESULT_OK, new Intent());
+        final boolean result = saver.handleSave(requestCode, Activity.RESULT_OK, new Intent());
 
         // Verify
-        assertNull(result);
+        assertFalse(result);
     }
 
     /**
-     * Makes sure that if we have a result code failure we do not get a picker
+     * Makes sure that if we have a result code failure we do not get a Saver
      * result
      */
-    public void testGetPickerResultResponseNotOk() {
+    public void testGetSaverResultResponseNotOk() throws SaverException {
         // Setup
-        final String appId = "12321";
+        final String appId = "1234321";
         final int requestCode = 456;
-        final IPicker picker = Picker.createPicker(appId);
-        picker.setRequestCode(requestCode);
+        final ISaver saver = Saver.createSaver(appId);
+        saver.setRequestCode(requestCode);
 
         // Act
-        final IPickerResult result = picker.getPickerResult(requestCode, Activity.RESULT_CANCELED, new Intent());
-
-        // Verify
-        assertNull(result);
-    }
-
-    /**
-     * Makes sure the application id is not null when creating the picker
-     */
-    public void testNullAppIdCreatedPicker() {
         try {
-            Picker.createPicker(null);
-            fail();
-        } catch (final IllegalArgumentException e) {
-            assertEquals("appId", e.getMessage());
-        }
-    }
-
-    /**
-     * Makes sure the application id is not empty string when creating the
-     * picker
-     */
-    public void testEmptyAppIdCreatedPicker() {
-        try {
-            Picker.createPicker("");
-            fail();
-        } catch (final IllegalArgumentException e) {
-            assertEquals("appId", e.getMessage());
+            saver.handleSave(requestCode, Activity.RESULT_CANCELED, new Intent());
+            fail("Expected an exception!");
+        } catch (final SaverException se) {
+            assertEquals(SaverError.Unknown, se.getErrorType());
         }
     }
 
     /**
      * Make sure that the given intent matches the expected signature for the
-     * action picker
+     * action Saver
      */
     private void verifyOneDriveGetContentActivity(final Intent intent) {
-        assertEquals(ONEDRIVE_INTENT_ACTION_PICKER, intent.getAction());
+        assertEquals(ONEDRIVE_INTENT_ACTION_SAVER, intent.getAction());
         assertEquals(Intent.CATEGORY_DEFAULT, intent.getCategories().iterator().next());
     }
 

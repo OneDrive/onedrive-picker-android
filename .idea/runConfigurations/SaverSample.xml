@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Picker Sample" type="AndroidRunConfigurationType" factoryName="Android Application">
+  <configuration default="false" name="Saver Sample" type="AndroidRunConfigurationType" factoryName="Android Application">
     <module name="SaverSample" />
     <option name="ACTIVITY_CLASS" value="" />
     <option name="MODE" value="default_activity" />

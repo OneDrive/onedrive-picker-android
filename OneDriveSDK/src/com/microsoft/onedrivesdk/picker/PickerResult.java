@@ -58,7 +58,7 @@ public final class PickerResult implements IPickerResult {
      */
     public static IPickerResult fromBundle(final Bundle data) {
         final PickerResult result = new PickerResult(data);
-        if (result == null || result.getLinkType() == null || result.getLink() == null) {
+        if (result.getLinkType() == null || result.getLink() == null) {
             return null;
         }
         return result;
@@ -72,7 +72,11 @@ public final class PickerResult implements IPickerResult {
     @Override
     public String getName() {
         final String extension = mData.getString("extension");
-        return mData.getString("name") + (TextUtils.isEmpty(extension) ? "" : extension);
+        if (TextUtils.isEmpty(extension)) {
+            return mData.getString("name");
+        } else {
+            return mData.getString("name") + extension;
+        }
     }
 
     /**

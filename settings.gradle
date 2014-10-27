@@ -1,1 +1,1 @@
-include ':OneDriveSDK', ':OneDriveSDKTests', ':PickerSample'
+include ':OneDriveSDK', ':OneDriveSDKTests', ':PickerSample', ':SaverSample'

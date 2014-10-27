@@ -12,6 +12,9 @@
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
     <property name="tabWidth" value="4"/>
+    <module name="JavadocMethod">
+      <property name="suppressLoadErrors" value="true"/>
+    </module>
     <module name="JavadocType"/>
     <module name="JavadocVariable"/>
     <module name="ConstantName"/>
@@ -62,9 +65,7 @@
     <module name="HiddenField"/>
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
-    <module name="MagicNumber">
-      <property name="ignoreNumbers" value="0, 1, 2, 3"/>
-    </module>
+    <module name="MagicNumber"/>
     <module name="MissingSwitchDefault"/>
     <module name="RedundantThrows">
       <property name="suppressLoadErrors" value="true"/>
@@ -78,6 +79,7 @@
     <module name="FinalClass"/>
     <module name="HideUtilityClassConstructor"/>
     <module name="InterfaceIsType"/>
+    <module name="VisibilityModifier"/>
     <module name="ArrayTypeStyle"/>
     <module name="TodoComment">
       <property name="severity" value="ignore"/>

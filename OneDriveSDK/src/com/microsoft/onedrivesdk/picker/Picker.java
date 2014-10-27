@@ -22,10 +22,10 @@
 
 package com.microsoft.onedrivesdk.picker;
 
+import com.microsoft.onedrivesdk.common.Client;
+
 import android.app.Activity;
-import android.content.*;
-import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -39,29 +39,14 @@ import android.widget.Toast;
 public final class Picker implements IPicker {
 
     /**
-     * The intent that triggers the OneDrive picking experience
-     */
-    private static final String ONEDRIVE_PICKER_ACTION = "onedrive.intent.action.PICKER";
-
-    /**
-     * The specific picker handler in the OneDrive application
-     */
-    private static final String ONEDRIVE_PICKER_HANDLER = "com.microsoft.skydrive.getcontent.RecieveSdkPickerActivity";
-
-    /**
-     * The default picker file request code leveraged by onActivtyResult(...)
+     * The default pick file request code leveraged by onActivtyResult(...)
      * signature
      */
     private static final int PICK_FILE_REQUEST_CODE = 0xF0F0;
 
     /**
-     * The OneDrive application package name
-     */
-    private static final String ONEDRIVE_PACKAGE_NAME = "com.microsoft.skydrive";
-
-    /**
-     * The application ID registered with OneDrive that created this picker
-     * {@link https://account.live.com/developers/applications/index}
+     * The application id registered with OneDrive that created this picker
+     * {@see https://account.live.com/developers/applications/index}
      */
     private String mAppId;
 
@@ -127,15 +112,15 @@ public final class Picker implements IPicker {
      *            from the picking flow
      */
     public void startPicking(final Activity activity, final LinkType linkType) {
-        final Intent pickerIntent = createOneDriveIntent();
-        final Intent androidMarketPlaceIntent = createAndroidMarketPlaceIntent();
-        final Intent amazonMarketPlaceIntent = createAmazonMarketPlaceIntent();
-        if (isAvailable(activity, pickerIntent)) {
+        final Intent pickerIntent = Client.createOneDriveIntent(Client.ONEDRIVE_PICKER_ACTION, mAppId);
+        final Intent androidMarketPlaceIntent = Client.createAndroidMarketPlaceIntent();
+        final Intent amazonMarketPlaceIntent = Client.createAmazonMarketPlaceIntent();
+        if (Client.isAvailable(activity, pickerIntent)) {
             pickerIntent.putExtra("linkType", linkType.toString());
             activity.startActivityForResult(pickerIntent, mRequestCode);
-        } else if (isAvailable(activity, androidMarketPlaceIntent)) {
+        } else if (Client.isAvailable(activity, androidMarketPlaceIntent)) {
             activity.startActivity(androidMarketPlaceIntent);
-        } else if (isAvailable(activity, amazonMarketPlaceIntent)) {
+        } else if (Client.isAvailable(activity, amazonMarketPlaceIntent)) {
             activity.startActivity(amazonMarketPlaceIntent);
         } else {
             Toast.makeText(activity, "Unable to start the OneDrive picker or device market place", Toast.LENGTH_LONG)
@@ -162,58 +147,5 @@ public final class Picker implements IPicker {
      */
     public int getRequestCode() {
         return mRequestCode;
-    }
-
-    /**
-     * Determines if the given intent can be resolved to an activity.
-     * 
-     * @param activity The activity that would start the picker experience
-     * @param intent The intent to check
-     * @return <b>true</b> if the OneDrive application can start and execute the
-     *         file picking flow. Return <b>false</b> if the OneDrive
-     *         application does not support this call, or if the application is
-     *         not installed.
-     */
-    private boolean isAvailable(final Activity activity, final Intent intent) {
-        final PackageManager pm = activity.getPackageManager();
-        return pm.queryIntentActivities(intent, 0).size() != 0;
-    }
-
-    /**
-     * Creates the intent to launch the OneDrive picker
-     * 
-     * @return The intent instance
-     */
-    private Intent createOneDriveIntent() {
-        final Intent intent = new Intent();
-        intent.setAction(ONEDRIVE_PICKER_ACTION);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.setComponent(new ComponentName(ONEDRIVE_PACKAGE_NAME, ONEDRIVE_PICKER_HANDLER));
-        intent.putExtra("appId", mAppId);
-        return intent;
-    }
-
-    /**
-     * Creates the intent to launch the android marketplace for the OneDrive
-     * application
-     * 
-     * @return the intent instance
-     */
-    private Intent createAndroidMarketPlaceIntent() {
-        final Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(String.format("market://details?id=%s", ONEDRIVE_PACKAGE_NAME)));
-        return intent;
-    }
-
-    /**
-     * Creates the intent to launch the amazon marketplace for the OneDrive
-     * application
-     * 
-     * @return the intent instance
-     */
-    private Intent createAmazonMarketPlaceIntent() {
-        final Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(String.format("amzn://apps/android?p=%s", ONEDRIVE_PACKAGE_NAME)));
-        return intent;
     }
 }

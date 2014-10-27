@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SaverSample</string>
+    <string name="main_welcomeText">OneDriveSDK Saver Sample</string>
+    <string name="main_startSaverButton">Save a File</string>
+    <string name="file_name_edit_text">MyFile.txt</string>
+    <string name="file_name_label">File Name:</string>
+    <string name="file_size_label">File Size (KB):</string>
+    <string name="file_size_edit_text">100</string>
+    <string name="file_name_hint">Name of the file to upload to OneDrive</string>
+    <string name="file_size_hint">Size of the file to upload to OneDrive in kilobytes</string>
+    <string name="error_message_none">None</string>
+    <string name="result_table_label">Saver Results</string>
+    <string name="overall_result_label">Result:</string>
+    <string name="overall_result_success">Success</string>
+    <string name="overall_result_failure">Failure</string>
+    <string name="error_type_label">Error Type:</string>
+    <string name="debug_error_label">Debug Error:</string>
+
+</resources>

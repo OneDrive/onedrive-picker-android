@@ -1,0 +1,126 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/main_majorSpacer"
+        android:layout_marginRight="@dimen/main_majorSpacer" >
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/main_welcomeText"
+            android:textSize="20sp" />
+
+        <Space
+            android:id="@+id/welcomeTextSaverOptionsSpacer"
+            android:layout_below="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/main_majorSpacer" />
+
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_below="@+id/welcomeTextSaverOptionsSpacer"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/main_majorSpacer"
+            android:layout_marginRight="@dimen/main_majorSpacer" >
+
+            <TableRow>
+                <TextView
+                    android:text="@string/file_name_label"
+                    />
+
+                <EditText
+                    android:id="@+id/file_name_edit_text"
+                    android:text="@string/file_name_edit_text"
+                    android:hint="@string/file_name_hint" />
+
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:text="@string/file_size_label" />
+
+                <EditText
+                    android:id="@+id/file_size_edit_text"
+                    android:text="@string/file_size_edit_text"
+                    android:hint="@string/file_size_hint"
+                    android:inputType="number" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:text="@string/main_startSaverButton"
+            android:id="@+id/startSaverButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/table"
+            android:layout_marginTop="@dimen/main_majorSpacer"
+            android:layout_marginBottom="@dimen/main_majorSpacer"/>
+
+        <TableLayout
+            android:id="@+id/result_table"
+            android:layout_below="@+id/startSaverButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
+            <TableRow
+                android:layout_marginBottom="@dimen/main_majorSpacer">
+                <TextView
+                    android:textStyle="bold"
+                    android:text="@string/result_table_label"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="@dimen/main_minorSpacer">
+                <TextView
+                    android:text="@string/overall_result_label" />
+
+                <TextView
+                    android:id="@+id/overall_result"
+                    android:text="@string/overall_result_success" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="@dimen/main_minorSpacer">
+                <TextView
+                    android:text="@string/error_type_label" />
+
+                <TextView
+                    android:id="@+id/error_type_result"
+                    android:text="@string/error_message_none" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="@dimen/main_minorSpacer">
+                <TextView
+                    android:text="@string/debug_error_label" />
+
+                <TextView
+                    android:id="@+id/debug_error_result"
+                    android:text="@string/error_message_none" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
