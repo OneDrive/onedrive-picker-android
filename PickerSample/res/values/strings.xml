@@ -18,7 +18,8 @@
     <string name="main_thumbnailTitle3">Thumbnail: Large</string>
     <string name="main_thumbnailDefaultUrl">https://www.onedrive.com</string>
     <string name="main_thumbnailDescription">A thumbnail</string>
-
+    <string name="main_resultSaveAsLabel">Save Locally</string>
+    <string name="main_resultSaveAsButtonLabel">Save</string>
     <color name="main_thumbnailBackgroundColor">#0043ae</color>
 
     <dimen name="main_majorSpacer">16dp</dimen>

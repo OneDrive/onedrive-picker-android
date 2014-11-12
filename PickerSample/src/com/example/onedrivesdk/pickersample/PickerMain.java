@@ -24,7 +24,8 @@ package com.example.onedrivesdk.pickersample;
 
 import com.microsoft.onedrivesdk.picker.*;
 
-import android.app.Activity;
+import android.app.*;
+import android.app.DownloadManager.Request;
 import android.content.Intent;
 import android.graphics.*;
 import android.net.Uri;
@@ -74,9 +75,31 @@ public class PickerMain extends Activity {
     };
 
     /**
+     * Saves the picked file from OneDrive to the device
+     */
+    private final OnClickListener mSaveLocally = new OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            if (mDownloadUrl == null) {
+                return;
+            }
+
+            final DownloadManager downloadManager = (DownloadManager)v.getContext().getSystemService(DOWNLOAD_SERVICE);
+            final Request request = new Request(mDownloadUrl);
+            request.setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            downloadManager.enqueue(request);
+        }
+    };
+
+    /**
      * The OneDrive picker instance used by this activity
      */
     private IPicker mPicker;
+
+    /**
+     * The picked file's download URI
+     */
+    private Uri mDownloadUrl;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -88,6 +111,9 @@ public class PickerMain extends Activity {
 
         // Add the start picker listener
         ((Button)findViewById(R.id.startPickerButton)).setOnClickListener(mStartPickingListener);
+
+        // Add the save as listener for download links
+        ((Button)findViewById(R.id.saveAsButton)).setOnClickListener(mSaveLocally);
     }
 
     @Override
@@ -129,6 +155,11 @@ public class PickerMain extends Activity {
         ((TextView)findViewById(R.id.thumbnail_large_uri)).setText(thumbnailLarge + "");
 
         findViewById(R.id.thumbnails).setVisibility(View.VISIBLE);
+
+        if (result.getLinkType() == LinkType.DownloadLink) {
+            findViewById(R.id.saveAsArea).setVisibility(View.VISIBLE);
+            mDownloadUrl = result.getLink();
+        }
     }
 
     /**
@@ -140,12 +171,14 @@ public class PickerMain extends Activity {
         ((TextView)findViewById(R.id.linkResult)).setText("");
         ((TextView)findViewById(R.id.fileSizeResult)).setText("");
         findViewById(R.id.thumbnails).setVisibility(View.INVISIBLE);
+        findViewById(R.id.saveAsArea).setVisibility(View.INVISIBLE);
         ((ImageView)findViewById(R.id.thumbnail_small)).setImageBitmap(null);
         ((TextView)findViewById(R.id.thumbnail_small_uri)).setText("");
         ((ImageView)findViewById(R.id.thumbnail_medium)).setImageBitmap(null);
         ((TextView)findViewById(R.id.thumbnail_medium_uri)).setText("");
         ((ImageView)findViewById(R.id.thumbnail_large)).setImageBitmap(null);
         ((TextView)findViewById(R.id.thumbnail_large_uri)).setText("");
+        mDownloadUrl = null;
     }
 
     /**
