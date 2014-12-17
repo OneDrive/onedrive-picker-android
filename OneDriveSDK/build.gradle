@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 
@@ -28,13 +28,6 @@ repositories {
 android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
-
-    buildTypes {
-        release {
-            runProguard false
-            proguardFiles 'proguard.cfg'
-        }
-    }
 
     sourceSets {
         main {
