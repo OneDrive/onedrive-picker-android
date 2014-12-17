@@ -17,6 +17,7 @@ public class ClientTests extends AndroidTestCase {
         // Setup
         final String expectedAction = "a.b.c.d.e";
         final String expectedAppId = "12341234";
+        final int defaultValue = -1;
 
         // Action
         final Intent result = Client.createOneDriveIntent(expectedAction, expectedAppId);
@@ -24,7 +25,7 @@ public class ClientTests extends AndroidTestCase {
         // Verify
         assertEquals(expectedAction, result.getAction());
         assertEquals(expectedAppId, result.getStringExtra("appId"));
-        assertEquals(2, result.getIntExtra("version", -1));
+        assertEquals(2, result.getIntExtra("version", defaultValue));
         assertEquals(1, result.getCategories().size());
         assertEquals(Intent.CATEGORY_DEFAULT, result.getCategories().iterator().next());
     }
