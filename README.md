@@ -27,12 +27,13 @@ The picker for Android is available as open source on GitHub and includes both o
 
 For information on configuring your environment to work with the sample applications or the picker SDK see [Configuring your Android Environment](http://developer.android.com/sdk/index.html).
 
-## Use gradle dependency
+## Install AAR via Gradle
 
 ```gradle
 repositories {
     jcenter()
 }
+
 dependencies {
     compile ('com.microsoft.onedrivesdk:onedrive-picker-android:v2.0')
 }
