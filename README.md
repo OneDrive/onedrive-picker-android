@@ -1,4 +1,5 @@
 # OneDrive picker for Android
+[ ![Download](https://api.bintray.com/packages/onedrive/Maven/onedrive-picker-android/images/download.svg) ](https://bintray.com/onedrive/Maven/onedrive-picker-android/_latestVersion)
 [![Build Status](https://travis-ci.org/OneDrive/onedrive-picker-android.svg)](https://travis-ci.org/OneDrive/onedrive-picker-android)
 
 The picker is the fastest way to integrate your Android app with OneDrive and OneDrive for Business. It provides a set of Java APIs that your app can use to browse, select, open and save files in your user's OneDrive. When opening files from OneDrive, you can also get shareable links to files - great for sending to friends, coworkers, and relatives - and thumbnails of image and video files so you don't have to build them yourself.
