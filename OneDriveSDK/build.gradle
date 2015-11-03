@@ -61,13 +61,16 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-def bintrayUsername = properties.getProperty('bintray.user')
-def bintrayApikey = properties.getProperty('bintray.apikey')
-
 uploadArchives {
+    def bintrayUsername = ""
+    def bintrayApikey = ""
+    if (project.rootProject.file('local.properties').exists()) {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        bintrayUsername = properties.getProperty('bintray.user')
+        bintrayApikey = properties.getProperty('bintray.apikey')
+    }
+
     configuration = configurations.archives
     repositories.mavenDeployer {
         pom {
