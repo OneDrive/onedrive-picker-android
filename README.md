@@ -17,12 +17,27 @@ In this guide, we’ll show you how to get your app quickly [opening](#opening-f
 
 ## Setup
 
+## Compile with the source code
+
 The picker for Android is available as open source on GitHub and includes both open and save capabilities. You can either download the latest version directly or clone the repository:
 
 * [Download zip](https://github.com/OneDrive/onedrive-picker-android/archive/master.zip)
 * `git clone https://github.com/OneDrive/onedrive-picker-android.git`
 
 For information on configuring your environment to work with the sample applications or the picker SDK see [Configuring your Android Environment](http://developer.android.com/sdk/index.html).
+
+## Use gradle dependency
+
+```gradle
+repositories {
+    jcenter()
+}
+dependencies {
+    compile ('com.microsoft.onedrivesdk:onedrive-picker-android:v2.0')
+}
+```
+
+### Get an App Id
 
 Register your app [here] (https://account.live.com/developers/applications) to get an App ID (Client ID) to launch the picker.
 
