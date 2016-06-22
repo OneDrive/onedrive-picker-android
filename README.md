@@ -228,3 +228,8 @@ Run the [saver sample app](SaverSample) to see this all in action.
 The OneDrive picker library is supported at runtime for [Android API revision 14](http://source.android.com/source/build-numbers.html) and greater. To build the picker library you need to install Android API revision 19 or greater.
 
 The picker requires the OneDrive app to be installed, in order to function. If the OneDrive app is not installed, the user will be prompted to download the app when either the `startPicking()` or `startSaving()` method is invoked.
+
+
+## Contributing
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
