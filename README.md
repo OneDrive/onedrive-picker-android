@@ -1,3 +1,22 @@
+---
+page_type: sample
+products:
+- office-onedrive
+- ms-graph
+languages:
+- java
+extensions:
+  contentType: samples
+  technologies:
+  - Microsoft Graph
+  services:
+  - OneDrive
+  platforms:
+  - Android
+  createdDate: 8/6/2014 3:51:12 PM
+  scenarios:
+  - Mobile
+---
 # OneDrive picker for Android
 [ ![Download](https://api.bintray.com/packages/onedrive/Maven/onedrive-picker-android/images/download.svg) ](https://bintray.com/onedrive/Maven/onedrive-picker-android/_latestVersion)
 [![Build Status](https://travis-ci.org/OneDrive/onedrive-picker-android.svg)](https://travis-ci.org/OneDrive/onedrive-picker-android)
